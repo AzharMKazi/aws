@@ -1,0 +1,17 @@
+digraph ETLFlow {
+  rankdir=LR;
+  SourceDB [label="PostgreSQL DB", shape=cylinder];
+  DMS [label="AWS DMS", shape=box];
+  S3Raw [label="S3 Raw Zone", shape=folder];
+  GlueJob [label="AWS Glue Job", shape=box];
+  S3Processed [label="S3 Processed Zone", shape=folder];
+  EMR [label="Amazon EMR
+(Spark Transform)", shape=box];
+  S3Analytics [label="S3 Analytics Zone", shape=folder];
+  Athena [label="Athena", shape=box];
+  Airflow [label="Apache Airflow", shape=box];
+
+  SourceDB -> DMS -> S3Raw -> GlueJob -> S3Processed -> EMR -> S3Analytics -> Athena;
+  Airflow -> GlueJob;
+  Airflow -> EMR;
+}
